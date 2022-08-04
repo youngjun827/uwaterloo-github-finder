@@ -33,7 +33,7 @@ function UserResults() {
   if (!loading) {
     return (
         <div>
-            <div className='grid grid-cols-1'>
+            <div className='grid grid-cols-1 gap-[1rem]'>
                 {currentPosts.map((user) => (
                     <UserItem key={user.full_name} user={user}/>
                 ))}
