@@ -6,7 +6,7 @@ import moment from 'moment'
 function UserItem({user: {name, description, pushed_at, owner, html_url}} ) {
 
     return (
-        <div className="stats shadow stats-vertical md:stats-horizontal border-2 border-[#423F00]">
+        <div className="stats shadow stats-vertical lg:stats-horizontal border-2 border-[#423F00]">
 
             <div className="stat">
                 <div className="stat-figure text-secondary">
