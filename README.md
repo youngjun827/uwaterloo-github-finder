@@ -1,8 +1,8 @@
 ![image info](./src/components/assets/screen-shot.png)
 
-# Getting Started with Create React App
+# Find the latest GitHub projects related to the University of Waterloo.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+You can find students' contributions to the UW hackathon, the Robotics team, answers to CCC, a list of links that students found useful during their time at UWaterloo, and a bunch of other UW students' work. Feel free to check them out!
 
 ## Available Scripts
 
