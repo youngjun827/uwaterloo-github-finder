@@ -23,12 +23,12 @@ function UserItem({user: {name, description, pushed_at, owner, html_url}} ) {
             </div>
 
             <div className="stat">
-                <div className="stat-figure text-primary">
+                <div className="text-primary text-4xl font-bold">Repo Name: {name}</div>
+                <div className="sm:stat-figure text-primary">
                     <a href={html_url} target='_blank'>
-                        <span className="badge">Repo Link</span>
+                        Project Repo: <span className="badge">Click Me</span>
                     </a>
                 </div>
-                <div className="text-primary text-4xl font-bold">Repo Name: {name}</div>
                 <div>{description}</div>
                                                  {/* Display ~timeago: https://momentjs.com/docs/ */}
                 <div className="stat-desc">Updated: {moment(pushed_at).fromNow()} </div>
