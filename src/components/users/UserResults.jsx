@@ -12,8 +12,8 @@ function UserResults() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
 
-    const [data, setData] = useState([]);
-    const [sortType, setSortType] = useState('pushed_at');
+    // const [data, setData] = useState([]);
+    // const [sortType, setSortType] = useState('pushed_at');
 
   useEffect(() => {
     const getUserData = async() => {
@@ -23,32 +23,33 @@ function UserResults() {
     }
     getUserData()
 
-    sortArray(sortType);
-  }, [dispatch, sortType])
+    // sortArray(sortType);
+    // Add sortType for dependencies
+  }, [dispatch])
 
-    // Get current posts
+    //Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = users.slice(indexOfFirstPost, indexOfLastPost);
 
-  // Change page
+  //Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  const sortArray = (type) => {
-    const types = {
-      pushed_at: 'pushed_at',
-      stargazers_count: 'stargazers_count',
-      forks_count: 'forks_count',
-    };
-    const sortProperty = types[type];
-    const sorted = [...users].sort((a, b) => b[sortProperty] - a[sortProperty]);
-    setData(sorted);
-  };
+  // const sortArray = (type) => {
+  //   const types = {
+  //     pushed_at: 'pushed_at',
+  //     stargazers_count: 'stargazers_count',
+  //     forks_count: 'forks_count',
+  //   };
+  //   const sortProperty = types[type];
+  //   const sorted = [...users].sort((a, b) => b[sortProperty] - a[sortProperty]);
+  //   setData(sorted);
+  // };
 
   if (!loading) {
     return (
         <div>
-            <select 
+            {/* <select 
               className="select select-primary w-full max-w-xs mb-4"
               onChange={(e) => setSortType(e.target.value)}
             >
@@ -56,7 +57,7 @@ function UserResults() {
               <option value="stargazers_count">Highest Star Count</option>
               <option value="forks_count">Highest Forks Count</option>
               <option value="pushed_at">Latest Project</option>
-            </select>
+            </select> */}
             <div className='grid grid-cols-1 gap-[1rem]'>
                 {currentPosts.map((user) => (
                     <UserItem key={user.full_name} user={user}/>
