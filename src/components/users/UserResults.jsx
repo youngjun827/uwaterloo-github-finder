@@ -1,63 +1,51 @@
-import React, {useContext, useEffect, useState} from 'react'
-
-import GithubContext from '../../context/github/GithubContext'
-import { getUsers } from '../../context/github/GithubActions'
+import React, { useState, useEffect} from 'react'
 
 import UserItem from './UserItem'
-import Loader from '../layout/Loader'
 import Pagination from '../layout/Pagination'
 
-function UserResults() {
-    const {users, loading, dispatch} = useContext(GithubContext)
+function UserResults({users}) {
+
+    const [data, setData] = useState([]);
+    const [sortType, setSortType] = useState('pushed_at');
+
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
 
-    // const [data, setData] = useState([]);
-    // const [sortType, setSortType] = useState('pushed_at');
-
-  useEffect(() => {
-    const getUserData = async() => {
-        dispatch({type: 'SET_LOADING'});
-        const userData = await getUsers()
-        dispatch({type: 'GET_USERS', payload: userData})
-    }
-    getUserData()
-
-    // sortArray(sortType);
-    // Add sortType for dependencies
-  }, [dispatch])
+    useEffect(() => {
+        const sortArray = (type) => {
+          const types = {
+            pushed_at: 'pushed_at',
+            stargazers_count: 'stargazers_count',
+            forks_count: 'forks_count',
+          };
+          const sortProperty = types[type];
+          const sorted = [...users].sort((a, b) => b[sortProperty] - a[sortProperty]);
+          setData(sorted);
+        };
+    
+        sortArray(sortType);
+      }, [sortType]); 
 
     //Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = users.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
 
-  //Change page
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+    //Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  // const sortArray = (type) => {
-  //   const types = {
-  //     pushed_at: 'pushed_at',
-  //     stargazers_count: 'stargazers_count',
-  //     forks_count: 'forks_count',
-  //   };
-  //   const sortProperty = types[type];
-  //   const sorted = [...users].sort((a, b) => b[sortProperty] - a[sortProperty]);
-  //   setData(sorted);
-  // };
-
-  if (!loading) {
     return (
         <div>
-            {/* <select 
-              className="select select-primary w-full max-w-xs mb-4"
-              onChange={(e) => setSortType(e.target.value)}
-            >
-              <option disabled selected>Sort By</option>
-              <option value="stargazers_count">Highest Star Count</option>
-              <option value="forks_count">Highest Forks Count</option>
-              <option value="pushed_at">Latest Project</option>
-            </select> */}
+            <select 
+                className="select select-primary w-full max-w-xs mb-5" 
+                onChange={(e) => setSortType(e.target.value)
+            }>
+                <option disabled selected>Sort By: </option>
+                <option value="stargazers_count">Highest Stars</option>
+                <option value="forks_count">Highest Forks</option>
+                <option value="pushed_at">Latest Update</option>
+
+            </select>
             <div className='grid grid-cols-1 gap-[1rem]'>
                 {currentPosts.map((user) => (
                     <UserItem key={user.full_name} user={user}/>
@@ -65,18 +53,13 @@ function UserResults() {
             </div>
             <Pagination
                 postsPerPage={postsPerPage}
-                totalPosts={users.length}
+                totalPosts={data.length}
                 paginate={paginate}
                 currentPage={currentPage}
             />
         </div>
       )
-  } else {
-    return <div>
-        <Loader/>
-    </div>
-  }
-}
+  } 
 
 
 export default UserResults

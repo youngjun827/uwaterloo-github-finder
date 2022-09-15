@@ -12,7 +12,7 @@ function UserItem({user: {name, description, pushed_at, owner, html_url}} ) {
                 <div className="stat-figure text-secondary">
                     <div className="avatar">
                     <div className="w-16 rounded-full">
-                        <img src={owner.avatar_url} />
+                        <img src={owner.avatar_url} alt="Avatar"/>
                     </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@ function UserItem({user: {name, description, pushed_at, owner, html_url}} ) {
             <div className="stat">
                 <div className="text-primary text-4xl font-bold">Repo Name: {name}</div>
                 <div className="sm:stat-figure text-primary">
-                    <a href={html_url} target='_blank'>
+                    <a href={html_url} target='_blank' rel="noreferrer">
                         Project Repo: <span className="badge">Click Me</span>
                     </a>
                 </div>
